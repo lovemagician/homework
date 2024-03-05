@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      function Header() {
+        return (
+          <header>
+            <h1>구구단</h1>
+          </header>
+        );
+      }
+
+      function Counter() {
+        const [count, setCount] = React.useState(1);
+
+        const handleClick = (num) => {
+          if (num === "") {
+            alert("숫자를 입력해 주세요.");
+            return;
+          }
+          setCount(num);
+        };
+
+        const handleEnter = (e, num) => {
+          let code = e.code;
+          if (code == "Enter" && num === "") {
+            alert("숫자를 입력해 주세요.");
+            return;
+          }
+          if (code == "Enter") {
+            setCount(num);
+          }
+        };
+
+        let result = [];
+        for (let i = 1; i <= 9; i++) {
+          result.push(
+            <li>
+              {count} x {i} = {count * i}
+            </li>
+          );
+        }
+
+        return (
+          <div id="counter">
+            <input
+              id="inputNum"
+              type="number"
+              min="1"
+              placeholder="숫자를 입력해 주세요."
+              onKeyPress={() => {
+                handleEnter(event, inputNum.value);
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                handleClick(inputNum.value);
+              }}
+            >
+              Enter
+            </button>
+            <h3>{count}단 </h3>
+            <ul>{result}</ul>
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div id="app">
+            <Header />
+            <Counter />
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
